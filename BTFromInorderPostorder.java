@@ -2,7 +2,7 @@
 // All elements to the left of this index form the left subtree, and all elements to the right form the right subtree. Recursively
 // construct the entire tree while keeping track of the start and end indices of the postorder and inorder traversals for each subtree.
 // Time Complexity: O(n) where n - node count
-// Space Complexity: O(n)
+// Space Complexity: O(n) for hashmap
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : No
 

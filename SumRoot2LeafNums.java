@@ -1,8 +1,7 @@
-// Approach: Traverse the tree in a DFS manner, using a path (ArrayList) to store the current path in each recursive call. When a leaf
-// node is encountered, compute the number formed using the current path and add it to the global sum. After traversing the non-null
-// children, backtrack** by removing the current element from the path.
-// Time Complexity: O(n^2) where n - node count
-// Space Complexity: O(n)
+// Approach: Traverse the tree in a DFS manner while keeping track of the current path sum. When a leaf node is encountered, update
+// the path sum by adding the leaf’s value and include it in the global sum.
+// Time Complexity: O(n) where n - node count
+// Space Complexity: O(h) for recursion stack. where h - height of the tree
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : No
 
@@ -23,16 +22,31 @@ public class SumRoot2LeafNums {
     private int sum;
 
     int sumRoot2Leaf(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        List<Integer> path = new ArrayList<>();
+//        if (root == null) {
+//            return 0;
+//        }
+//        List<Integer> path = new ArrayList<>();
         sum = 0;
-        traverse(root, path);
+//        traverse1(root, path);
+        traverse(root, sum);
         return sum;
     }
 
-    void traverse(TreeNode root, List<Integer> path) {
+    void traverse(TreeNode root, int pathSum) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            pathSum = pathSum * 10 + root.val;
+            sum += pathSum;
+            return;
+        }
+        pathSum = pathSum * 10 + root.val;
+        traverse(root.left, pathSum);
+        traverse(root.right, pathSum);
+    }
+
+    void traverse1(TreeNode root, List<Integer> path) {
         if (root.left == null && root.right == null) {
             int s = 0;
             for (int i = 0; i < path.size(); i++) {
@@ -44,10 +58,10 @@ public class SumRoot2LeafNums {
         }
         path.add(root.val);
         if (root.left != null) {
-            traverse(root.left, path);
+            traverse1(root.left, path);
         }
         if (root.right != null) {
-            traverse(root.right, path);
+            traverse1(root.right, path);
         }
         path.remove(path.size() - 1); // backtrack**
     }
